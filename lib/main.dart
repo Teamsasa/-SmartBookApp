@@ -90,7 +90,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
-            label: '新着記事',
+            label: '記事一覧',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),

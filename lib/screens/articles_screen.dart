@@ -9,7 +9,7 @@ class ArticlesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('新着記事一覧'),
+        title: const Text('記事一覧'),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -19,88 +19,94 @@ class ArticlesScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 新着記事を横スライドで表示
-            Padding(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                '新着記事一覧',
-                style: Theme.of(context).textTheme.titleLarge,
+                '新着記事',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            SizedBox(
-              height: 200, // 高さを調整
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 220,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 10, // 仮の記事数
+                itemCount: 10,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: ArticleCard(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WebViewScreen(
-                              url: 'https://example.com/article/$index',
-                              title: '記事 ${index + 1}',
+                    child: SizedBox(
+                      width: 160,
+                      child: ArticleCard(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WebViewScreen(
+                                url: 'https://example.com/article/$index',
+                                title: '記事 ${index + 1}',
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      title: '新着記事 ${index + 1}',
-                      summary: '新着記事の要約',
-                      imageUrl: 'https://picsum.photos/seed/$index/300/200',
+                          );
+                        },
+                        title: '新着記事 ${index + 1}',
+                        summary: '新着記事の要約',
+                        imageUrl: 'https://picsum.photos/seed/$index/300/200',
+                      ),
                     ),
                   );
                 },
               ),
             ),
-
-            // あなたへのおすすめを2列で表示
-            Padding(
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'あなたへのおすすめ',
-                style: Theme.of(context).textTheme.titleLarge,
+                'おすすめ記事',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(), // 親のスクロールに統一
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2列表示
+                crossAxisCount: 2,
                 crossAxisSpacing: 16.0,
                 mainAxisSpacing: 16.0,
-                childAspectRatio: 1.0, // カードの比率を調整
+                childAspectRatio: 0.75,
               ),
-              itemCount: 6, // 仮のおすすめ記事数
-              itemBuilder: (context, index) {
-                return ArticleCard(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebViewScreen(
-                          url: 'https://example.com/recommendation/$index',
-                          title: 'おすすめ記事 ${index + 1}',
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return ArticleCard(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WebViewScreen(
+                            url: 'https://example.com/recommendation/$index',
+                            title: 'おすすめ記事 ${index + 1}',
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  title: 'おすすめ記事 ${index + 1}',
-                  summary: 'おすすめ記事の要約',
-                  imageUrl: 'https://picsum.photos/seed/recommendation_$index/300/200',
-                );
-              },
+                      );
+                    },
+                    title: 'おすすめ記事 ${index + 1}',
+                    summary: 'おすすめ記事の要約',
+                    imageUrl:
+                        'https://picsum.photos/seed/recommendation_$index/300/200',
+                  );
+                },
+                childCount: 6,
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
