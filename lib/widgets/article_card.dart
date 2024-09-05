@@ -1,32 +1,44 @@
 import 'package:flutter/material.dart';
 
 class ArticleCard extends StatelessWidget {
+  final String title;
+  final String summary;
+  final String imageUrl;
   final VoidCallback onTap;
 
-  const ArticleCard({super.key, required this.onTap});
+  const ArticleCard({
+    required this.title,
+    required this.summary,
+    required this.imageUrl,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        elevation: 4,
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Container(
-                color: Colors.grey[300],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Image.network(imageUrl),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'タイトル',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    title,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  Text('本文'),
+                  const SizedBox(height: 8),
+                  Text(
+                    summary,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ],
               ),
             ),
