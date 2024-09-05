@@ -3,7 +3,7 @@ import '../widgets/article_card.dart';
 import 'webview_screen.dart';
 
 class ArticlesScreen extends StatelessWidget {
-  const ArticlesScreen({Key? key}) : super(key: key);
+  const ArticlesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

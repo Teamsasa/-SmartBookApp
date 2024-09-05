@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ArticleCard extends StatelessWidget {
   final VoidCallback onTap;
 
-  const ArticleCard({Key? key, required this.onTap}) : super(key: key);
+  const ArticleCard({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class ArticleCard extends StatelessWidget {
                 color: Colors.grey[300],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'タイトル',
                     style: TextStyle(fontWeight: FontWeight.bold),

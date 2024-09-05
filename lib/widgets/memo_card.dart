@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MemoCard extends StatelessWidget {
-  const MemoCard({Key? key}) : super(key: key);
+  const MemoCard({super.key});
 
   @override
   Widget build(BuildContext context) {
