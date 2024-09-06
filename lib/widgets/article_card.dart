@@ -11,8 +11,8 @@ class ArticleCard extends StatelessWidget {
     required this.summary,
     required this.imageUrl,
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
