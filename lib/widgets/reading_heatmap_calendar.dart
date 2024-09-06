@@ -6,10 +6,10 @@ class ReadingHeatmapCalendar extends StatelessWidget {
   final int maxReadingCount;
 
   const ReadingHeatmapCalendar({
-    Key? key,
+    super.key,
     required this.readingData,
     required this.maxReadingCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
