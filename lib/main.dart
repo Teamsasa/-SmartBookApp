@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainScreen(),
+      home: const PaywallScreen(), // Add this line to show the paywall first
     );
   }
 }
@@ -86,25 +86,60 @@ class _MainScreenState extends State<MainScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'プロフィール',
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
-            label: '記事一覧',
+            label: 'Articles',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: '検索',
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: '設定',
+            label: 'Settings',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class PaywallScreen extends StatelessWidget {
+  const PaywallScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Subscribe to SmartBook'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Get full access to SmartBook',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Implement subscription logic here
+                // For now, we'll just navigate to the main screen
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              },
+              child: const Text('Subscribe Now'),
+            ),
+          ],
+        ),
       ),
     );
   }

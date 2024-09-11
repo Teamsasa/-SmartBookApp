@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     children: <Widget>[
                       ListTile(
                         leading: const Icon(Icons.note_add),
-                        title: const Text('メモを作成'),
+                        title: const Text('Create Note'),
                         onTap: () {
                           // メモ作成機能を実装
                           Navigator.pop(context);
@@ -62,7 +62,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       ),
                       ListTile(
                         leading: const Icon(Icons.share),
-                        title: const Text('共有'),
+                        title: const Text('Share'),
                         onTap: () {
                           // 共有機能を実装
                           Navigator.pop(context);
@@ -70,7 +70,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       ),
                       ListTile(
                         leading: const Icon(Icons.file_download),
-                        title: const Text('ダウンロード'),
+                        title: const Text('Download'),
                         onTap: () {
                           // ダウンロード機能を実装
                           Navigator.pop(context);

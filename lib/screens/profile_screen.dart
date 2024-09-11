@@ -30,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('プロフィール'),
+        title: const Text('Profile'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -55,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '章',
+                    'Chapter',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
@@ -65,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'プロフィール説明がここに表示されます。ユーザーの興味や経歴などを簡潔に紹介します。',
+                    'Profile description that will be displayed here. User\'s interests and background will be briefly introduced.',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 14),
                   ),
@@ -87,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    '最新のメモ',
+                    'Latest Notes',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
@@ -96,8 +96,8 @@ class ProfileScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 4,
                     itemBuilder: (context, index) => MemoCard(
-                      title: 'メモ ${index + 1}',
-                      content: 'これはメモ ${index + 1} の内容です。',
+                      title: 'Note ${index + 1}',
+                      content: 'This is the content of Note ${index + 1}.',
                       createdAt: DateTime.now().subtract(Duration(days: index)),
                     ),
                   ),

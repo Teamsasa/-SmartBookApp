@@ -35,7 +35,7 @@ class MemoCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '作成日: ${_formatDate(createdAt)}',
+              'Created: ${_formatDate(createdAt)}',
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
           ],

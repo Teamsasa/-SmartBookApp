@@ -15,13 +15,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('設定'),
+        title: const Text('Settings'),
       ),
       body: ListView(
         children: [
           SwitchListTile(
-            title: const Text('通知'),
-            subtitle: const Text('アプリからの通知を受け取る'),
+            title: const Text('Notifications'),
+            subtitle: const Text('Receive notifications from the app'),
             value: _notificationsEnabled,
             onChanged: (bool value) {
               setState(() {
@@ -30,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           ListTile(
-            title: const Text('言語'),
+            title: const Text('Language'),
             subtitle: Text(_selectedLanguage),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
@@ -38,21 +38,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           ListTile(
-            title: const Text('アカウント設定'),
+            title: const Text('Account Settings'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // アカウント設定画面に遷移する処理を実装
             },
           ),
           ListTile(
-            title: const Text('プライバシーポリシー'),
+            title: const Text('Privacy Policy'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // プライバシーポリシー画面に遷移する処理を実装
             },
           ),
           ListTile(
-            title: const Text('アプリについて'),
+            title: const Text('About the App'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // アプリについての情報を表示する処理を実装
@@ -68,7 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('言語を選択'),
+          title: const Text('Select Language'),
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 });
                 Navigator.pop(context);
               },
-              child: const Text('日本語'),
+              child: const Text('Japanese'),
             ),
             SimpleDialogOption(
               onPressed: () {

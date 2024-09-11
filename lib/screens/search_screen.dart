@@ -18,13 +18,13 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _searchResults = [
         {
-          'title': '検索結果 1: $query',
-          'summary': 'これは$queryに関する検索結果の要約です。',
+          'title': 'Search Result 1: $query',
+          'summary': 'This is a summary of the search result for $query.',
           'imageUrl': 'https://picsum.photos/seed/1/300/200',
         },
         {
-          'title': '検索結果 2: $query',
-          'summary': 'これは$queryに関する別の検索結果の要約です。',
+          'title': 'Search Result 2: $query',
+          'summary': 'This is another summary of the search result for $query.',
           'imageUrl': 'https://picsum.photos/seed/2/300/200',
         },
       ];
@@ -35,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('検索'),
+        title: const Text('Search'),
       ),
       body: Column(
         children: [
@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: '記事やメモを検索...',
+                hintText: 'Search articles or notes...',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),

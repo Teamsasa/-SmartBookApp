@@ -9,7 +9,7 @@ class ArticlesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('記事一覧'),
+        title: const Text('Articles'),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -25,7 +25,7 @@ class ArticlesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                '新着記事',
+                'New Articles',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -49,13 +49,13 @@ class ArticlesScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => WebViewScreen(
                                 url: 'https://example.com/article/$index',
-                                title: '記事 ${index + 1}',
+                                title: 'Article ${index + 1}',
                               ),
                             ),
                           );
                         },
-                        title: '新着記事 ${index + 1}',
-                        summary: '新着記事の要約',
+                        title: 'New Article ${index + 1}',
+                        summary: 'New Article summary',
                         imageUrl: 'https://picsum.photos/seed/$index/300/200',
                       ),
                     ),
@@ -68,7 +68,7 @@ class ArticlesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'おすすめ記事',
+                'Recommended Articles',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -91,13 +91,13 @@ class ArticlesScreen extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
                             url: 'https://example.com/recommendation/$index',
-                            title: 'おすすめ記事 ${index + 1}',
+                            title: 'Recommended Article ${index + 1}',
                           ),
                         ),
                       );
                     },
-                    title: 'おすすめ記事 ${index + 1}',
-                    summary: 'おすすめ記事の要約',
+                    title: 'Recommended Article ${index + 1}',
+                    summary: 'Recommended Article summary',
                     imageUrl:
                         'https://picsum.photos/seed/recommendation_$index/300/200',
                   );
