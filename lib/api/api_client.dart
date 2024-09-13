@@ -29,11 +29,12 @@ class ApiClient {
     );
 
     if (response.statusCode == 200) {
-      final user = User.fromJson(jsonDecode(response.body));
+      final jsonResponse = jsonDecode(response.body);
+      final user = User.fromJson(jsonResponse['user']);
       await _setSessionToken(response.headers['set-cookie'] ?? '');
       return user;
     } else {
-      throw Exception('Failed to sign up');
+      throw Exception('ユーザー登録に失敗しました');
     }
   }
 
