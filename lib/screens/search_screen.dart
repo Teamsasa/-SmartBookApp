@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/article_card.dart';
+import '../screens/webview_screen.dart';
+import '../api/api_client.dart';
+import '../models/article.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -10,25 +13,22 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, String>> _searchResults = [];
+  final ApiClient _apiClient = ApiClient();
+  List<Article> _searchResults = [];
 
-  void _performSearch(String query) {
-    // この部分は実際のデータベースやAPIと連携する必要があります
-    // ここでは簡単なデモ用のデータを使用します
-    setState(() {
-      _searchResults = [
-        {
-          'title': 'Search Result 1: $query',
-          'summary': 'This is a summary of the search result for $query.',
-          'imageUrl': 'https://picsum.photos/seed/1/300/200',
-        },
-        {
-          'title': 'Search Result 2: $query',
-          'summary': 'This is another summary of the search result for $query.',
-          'imageUrl': 'https://picsum.photos/seed/2/300/200',
-        },
-      ];
-    });
+  Future<void> _performSearch(String query) async {
+    try {
+      final results = await _apiClient.searchArticles(query);
+      setState(() {
+        _searchResults = results;
+      });
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('検索に失敗しました: $e')),
+        );
+      }
+    }
   }
 
   @override
@@ -57,13 +57,21 @@ class _SearchScreenState extends State<SearchScreen> {
             child: ListView.builder(
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
-                final result = _searchResults[index];
+                final article = _searchResults[index];
                 return ArticleCard(
-                  title: result['title']!,
-                  summary: result['summary']!,
-                  imageUrl: result['imageUrl']!,
+                  title: article.title,
+                  summary: '${article.author} - ${article.source}',
+                  imageUrl: 'https://picsum.photos/seed/${article.id}/300/200',
                   onTap: () {
-                    // 検索結果の詳細画面に遷移する処理を実装
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WebViewScreen(
+                          url: article.url,
+                          title: article.title,
+                        ),
+                      ),
+                    );
                   },
                 );
               },

@@ -1,36 +1,73 @@
 import 'package:flutter/material.dart';
 import '../widgets/memo_card.dart';
 import '../widgets/reading_heatmap_calendar.dart';
+import '../api/api_client.dart';
+import '../models/memo.dart';
+import '../models/user.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
-  // この関数は実際のデータソースから読書データを取得するものに置き換えてください
-  Map<DateTime, int> _getMockReadingData() {
-    final now = DateTime.now();
-    final Map<DateTime, int> mockData = {};
-    for (int i = 0; i < 365; i++) {
-      final date = now.subtract(Duration(days: i));
-      mockData[date] = (i % 7 == 0)
-          ? 5
-          : (i % 3 == 0)
-              ? 3
-              : (i % 2 == 0)
-                  ? 1
-                  : 0;
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final ApiClient _apiClient = ApiClient();
+  User? _user;
+  List<Memo> _latestMemos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+    _fetchLatestMemos();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      // ユーザー情報を取得するAPIエンドポイントがない場合、
+      // サインイン時にユーザー情報を保存し、それを使用する必要があります。
+      // ここでは、仮のユーザー情報を使用します。
+      setState(() {
+        _user = User(
+          id: '1',
+          name: 'テストユーザー',
+          email: 'test@example.com',
+          password: '',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('ユーザー情報の取得に失敗しました: $e')),
+      );
     }
-    return mockData;
+  }
+
+  Future<void> _fetchLatestMemos() async {
+    try {
+      final memos = await _apiClient.getMemoList();
+      if (mounted) {
+        setState(() {
+          _latestMemos = memos;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('メモの取得に失敗しました: $e')),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final readingData = _getMockReadingData();
-    final maxReadingCount =
-        readingData.values.reduce((max, value) => max > value ? max : value);
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('プロフィール'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -44,40 +81,35 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('assets/profile_image.jpg'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
-                    'Chapter',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    _user?.name ?? 'ユーザー名',
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    '@username',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Profile description that will be displayed here. User\'s interests and background will be briefly introduced.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14),
+                    _user?.email ?? 'email@example.com',
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: ReadingHeatmapCalendar(
-                readingData: readingData,
-                maxReadingCount: maxReadingCount,
+                readingData: {}, // 読書データを取得するAPIがない場合、空のマップを使用
+                maxReadingCount: 5,
               ),
             ),
             const SizedBox(height: 24),
@@ -94,12 +126,15 @@ class ProfileScreen extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 4,
-                    itemBuilder: (context, index) => MemoCard(
-                      title: 'Note ${index + 1}',
-                      content: 'This is the content of Note ${index + 1}.',
-                      createdAt: DateTime.now().subtract(Duration(days: index)),
-                    ),
+                    itemCount: _latestMemos.length,
+                    itemBuilder: (context, index) {
+                      final memo = _latestMemos[index];
+                      return MemoCard(
+                        title: 'Note ${index + 1}',
+                        content: memo.content,
+                        createdAt: memo.createdAt,
+                      );
+                    },
                   ),
                 ],
               ),
